@@ -62,7 +62,7 @@ def print_cards(json_object, outputfile):
 				continue
 			else:
 				actions.append(action['type'])
-		print actions
+		print(actions)
 
 	def safe_string(string):
 		if string != None:
@@ -77,7 +77,7 @@ def print_cards(json_object, outputfile):
 		filename = outputfile
 	else:
 		filename = 'output.csv'
-	with open(filename, 'wb') as csvfile:
+	with open(filename, 'w') as csvfile:
 		writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 		writer.writerow(['ID', 'Story', 'Description', 'Checklist', 'Comments', 'Labels', 'Due Date', 'Members'])
 		for card in cards:
