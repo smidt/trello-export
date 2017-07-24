@@ -54,6 +54,12 @@ def print_cards(json_object, outputfile):
 					member_string += member_obj['fullName'] + '\n'
 					break
 		return member_string[:-1]
+	def map_list(idlist, lists):
+		if idlist != None:
+			for list in lists:
+				if list['id'] == idlist:
+					return list['name']
+		return None
 
 	def print_types():
 		actions = []
@@ -73,13 +79,14 @@ def print_cards(json_object, outputfile):
 
 
 	cards = sorted(json_object['cards'], key=lambda k: k['idShort'])
+	lists = json_object['lists']
 	if outputfile != None:
 		filename = outputfile
 	else:
 		filename = 'output.csv'
 	with open(filename, 'w') as csvfile:
 		writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-		writer.writerow(['ID', 'Story', 'Description', 'Checklist', 'Comments', 'Labels', 'Due Date', 'Members'])
+		writer.writerow(['ID', 'Story', 'Description', 'Checklist', 'Comments', 'Labels', 'Due Date', 'Members', 'List'])
 		for card in cards:
 			writer.writerow([
 				card['idShort'], 
@@ -89,7 +96,8 @@ def print_cards(json_object, outputfile):
 				safe_string(comments_data(card)), 
 				safe_string(labels(card)), 
 				safe_string(card['due']), 
-				safe_string(members(card))
+				safe_string(members(card)),
+                safe_string(map_list(idlist=card['idList'], lists=lists))
 			]) 
 
 		print_types()
