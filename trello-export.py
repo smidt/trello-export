@@ -66,7 +66,7 @@ def print_cards(json_object, outputfile):
 
 	def safe_string(string):
 		if string != None:
-			return string.encode('ascii', 'ignore')
+			return string
 		else:
 			return ''
 
